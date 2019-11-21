@@ -13,7 +13,7 @@ test('As a user I should be able to register', async ({ assert, client }) => {
     phone_number: '07087322191',
     email_address: 'info100@gmail.com',
     password: '123123',
-    avatar: 'http://google.com/image.png'
+    avatar: 'http://google.com/image.png',
   }
   const response = await client.post('/v1/user').send(data).end()
   switch (response.status) {
