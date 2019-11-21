@@ -4,10 +4,6 @@ const Event = use('Event')
 const { test, trait } = use('Test/Suite')('User')
 trait('Test/ApiClient')
 
-test('make sure 2 + 2 is 4', async ({ assert }) => {
-  assert.equal(2 + 2, 4)
-})
-
 test('As a user I should be able to register', async ({ assert, client }) => {
   const data = {
     account_type: 'team',
