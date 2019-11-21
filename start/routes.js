@@ -15,7 +15,12 @@
 
 /** @type {typeof import('@adonisjs/framework/src/Route/Manager')} */
 const Route = use('Route')
+const Event = use('Event')
 
-Route.get('/', () => {
-  return { greeting: 'Hello world in JSON' }
-})
+Route.group(() => {
+  // Route.get('/users', 'UserController.index')
+  Route.post('/user', 'UserController.create')
+  Route.get('/test', () => {
+    Event.fire('new::user', {name: 'abiodun'})
+  })
+}).prefix('v1')
