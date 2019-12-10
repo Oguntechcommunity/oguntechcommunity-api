@@ -12,3 +12,8 @@ tmp
 database/*.sqlite
 
 package-lock.json
+
+*.log
+
+.vscode
+.idea
