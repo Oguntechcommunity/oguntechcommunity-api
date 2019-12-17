@@ -9,6 +9,9 @@ cd /code
 # generate the APP KEY with adonis
 adonis key:generate
 
+# install all dependencies
+npm i
+
 # pm2 runtime is executed for production while
 if [ $1 == "prod" ];
 then
