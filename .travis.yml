@@ -5,6 +5,8 @@ sudo: false
 before_install:
   - npm install -g npm@latest
 install:
+  - cp .env.example .env
+  - npm i
   - npm ci
 cache:
   directories:
