@@ -1,7 +1,6 @@
 const Env = use('Env')
 const Event = use('Event')
 const Mail = use('Mail')
-const Request = use('Request');
 
 Event.on('new::user', async (user) => {
   const adminEmail = Env.get('ADMIN_EMAIL_FROM', 'info@gmail.com')
@@ -14,7 +13,7 @@ Event.on('new::user', async (user) => {
   })
 })
 
-Event.on('new::user::slack', async ({ full_name, job_title, phone_number, email_address }) => {
+Event.on('new::user::slack', async ({request, full_name, job_title, phone_number, email_address }) => {
   const url = Env.get('SLACK_HOOK')
   const data = {
     json: {
@@ -26,7 +25,7 @@ Event.on('new::user::slack', async ({ full_name, job_title, phone_number, email_
     }
   }
   try {
-    const result = await Request.post(url, data)
+    const result = await request.post(url, data)
   } catch (e) {
     // console.log(e)
   }
