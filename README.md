@@ -3,19 +3,28 @@
 
 ## Setup
 
-Use the adonis command to install the blueprint
+- Install both Docker and Docker Compose
+- In the Project's root folder, run 
 
-```bash
-adonis new yardstick --api-only
-```
+    ```bash
+        docker-compose -f docker-compose.yml -p ogun-api build
+    ```
+  This command builds up the API's container. 
+  
+- To start the container, run 
 
-or manually clone the repo and then run `npm install`.
+    ```bash
+        docker-compose -f docker-compose.yml -p ogun-api up -d
+    ```
+  
+- In your .env file, change the `DB_HOST` value to `db`.
 
+- Enter into the bash shell by running 
+    
+    ```bash
+        docker exec -it ogun_community_api bash
+    ```
+  and from there, run migration `adonis migration:run`
 
-### Migrations
+- Access the API at `127.0.0.1` or `0.0.0.0`
 
-Run the following command to run startup migrations.
-
-```js
-adonis migration:run
-```

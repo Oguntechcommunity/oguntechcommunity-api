@@ -1,0 +1,3 @@
+FROM ogun_base as ogun_base
+
+CMD ["/etc/start.sh", "dev"]
