@@ -18,13 +18,10 @@ const Route = use('Route')
 const Event = use('Event')
 
 Route.get('/', () => {
-  return { greeting: 'Hello world in JSON' }
+  return { greeting: 'Ogun Tech Community V1 API ' }
 })
 
 Route.group(() => {
-  // Route.get('/users', 'UserController.index')
   Route.post('/user', 'UserController.create')
-  Route.get('/test', () => {
-    Event.fire('new::user', {name: 'abiodun'})
-  })
+  Route.get('/user/:query', 'UserController.find')
 }).prefix('v1')
