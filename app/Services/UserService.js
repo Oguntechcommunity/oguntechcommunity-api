@@ -6,16 +6,10 @@ const User = use('App/Models/User')
 class UserService {
 
   async store(user, response) {
-    const data = await User.findOrCreate(
-      {
-        email_address: user.email_address
-      },
-      user
-    )
-
+    const data = await User.create(user)
     return data ? this.created(data, response) : this.error(response)
   }
-
+  
   /**
    *  Send Notifications(Mail, Slack) when created
    * @param {*} data 
@@ -44,7 +38,7 @@ class UserService {
   * @param {*} param0 
   */
   async sendMailNotification({ full_name, email_address }) {
-    Event.fire('new::user::mail', {
+    await Event.fire('new::user::mail', {
       name: full_name,
       email: email_address
     })
@@ -54,7 +48,7 @@ class UserService {
    * @param {*} user 
    */
   async sendSlackNotification(user) {
-    Event.fire('new::user::slack', user)
+    await Event.fire('new::user::slack', user)
   }
 
   async search(query, response) {

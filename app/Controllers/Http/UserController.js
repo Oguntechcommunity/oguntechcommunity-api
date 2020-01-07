@@ -14,21 +14,22 @@ class UserController extends Service {
    */
   async create({ request, response }) {
     const user = request.all()
-    // const validation = await validate(user, rules)
+    const rules = {
+      full_name: 'required',
+      portfolio: 'url',
+      job_title: 'required|string',
+      phone_number: 'string|min:11|max:13',
+      email_address: 'required|email|unique:users,email_address'
+    }
+    const validation = await validate(user, rules)
+    if(validation.fails()) {
+      return response.status(400).json({
+        status: 'success',
+        message: validation._errorMessages,
+      })
+    }
     return this.store(user, response)
   }
-
-  // get rules() {
-  //   return {
-  //     account_type: 'string',
-  //     full_name: 'required',
-  //     portfolio: 'string',
-  //     job_title: 'string',
-  //     phone_number: 'string',
-  //     email_address: 'required|email|unique:users',
-  //     avatar: 'string'
-  //   }
-  // }
 
   async find({ request, response }) {
     const query = request.params.query
