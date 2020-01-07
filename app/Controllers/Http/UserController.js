@@ -1,56 +1,40 @@
 'use strict'
 
-const Event = use('Event')
-const User = use('App/Models/User')
+// const validator = use('UserValidator')
+const Service = use('UserService')
+const { validate } = use('Validator')
 /**
  * Resourceful controller for interacting with tests
  */
-class UserController {
-  /**
-   * Show a list of all tests.
-   * GET tests
-   */
-  index() {
-    return {
-      status: 'hello world'
-    }
-  }
+class UserController extends Service {
 
+  /**
+   * 
+   * @param {*} param0 
+   */
   async create({ request, response }) {
     const user = request.all()
-    const data = await User.findOrCreate({
-      email_address: user.email_address
-    },
-      user
-    )
-
-    if (data) {
-      this.sendMailNotification(data)
-      this.sendSlackNotification(data)
-      
-      return response.status(201).json({
+    const rules = {
+      full_name: 'required',
+      portfolio: 'url',
+      job_title: 'required|string',
+      phone_number: 'string|min:11|max:13',
+      email_address: 'required|email|unique:users,email_address'
+    }
+    const validation = await validate(user, rules)
+    if(validation.fails()) {
+      return response.status(400).json({
         status: 'success',
-        message: 'User Added Successfully',
+        message: validation._errorMessages,
       })
     }
-
-    return response.status(400).json({
-      status: 'success',
-      message: 'Error occured while processing data',
-    })
+    return this.store(user, response)
   }
 
-  async sendMailNotification({ full_name, email_address }) {
-    Event.fire('new::user', {
-      name: full_name,
-      email: email_address
-    })
+  async find({ request, response }) {
+    const query = request.params.query
+    return this.search(query, response)
   }
-
-  async sendSlackNotification(user) {
-    Event.fire('new::user::slack', user)
-  }
-
 
 }
 
