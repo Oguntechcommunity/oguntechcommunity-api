@@ -24,4 +24,4 @@ Route.get('/', () => {
 Route.group(() => {
   Route.post('/user', 'UserController.create')
   Route.get('/user/:query', 'UserController.find')
-}).prefix('v1')
+}).prefix('/api/v1').middleware('auth')
