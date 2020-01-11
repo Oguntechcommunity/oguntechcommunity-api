@@ -28,3 +28,7 @@
 
 - Access the API at `127.0.0.1` or `0.0.0.0`
 
+## Developers
+- Azeez Abiodun [https://twitter.com/abbey__web | Abbey Web] 
+- Majiyagbe Oluwole [https://twitter.com/moluwole | MOluwole] 
+
