@@ -5,8 +5,12 @@ const User = use('App/Models/User')
 
 class UserService {
 
-  async store(user, response) {
+  async store(user, response, auth) {
     const data = await User.create(user)
+    if(user.account_type == 'team') {
+      const token = await auth.generate(data)
+      return token
+    }
     return data ? this.created(data, response) : this.error(response)
   }
   
@@ -52,7 +56,7 @@ class UserService {
   }
 
   async search(query, response) {
-    const data = await User.query().where('full_name', 'LIKE', '%'+query+'%').fetch()
+    let data = await User.query().where('full_name', 'LIKE', '%'+query+'%').fetch()
     if (!data) {
       return response.status(400).json({
         status: 'success',
