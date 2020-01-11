@@ -19,7 +19,6 @@ const providers = [
   '@adonisjs/mail/providers/MailProvider',
   '@adonisjs/framework/providers/ViewProvider',
   '@adonisjs/validator/providers/ValidatorProvider',
-  '@adonisjs/auth/providers/AuthProvider'
 ]
 
 /*
@@ -50,7 +49,7 @@ const aceProviders = [
 */
 const aliases = {
   'UserService' : 'App/Services/UserService',
-  // 'UserValidator': 'App/Validator/User',
+  'SubscribeService': 'App/Services/SubscribeService',
 }
 
 /*
