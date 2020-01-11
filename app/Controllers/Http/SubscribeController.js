@@ -15,6 +15,18 @@ class SubscribeController extends Service {
    * @param {Response} ctx.response
    */
   async store ({ request, response, auth }) {
+    try {
+      const check = await auth.check()
+      const data = await auth.getUser()
+      if (check && data) {
+        return this.preStore(request, response)
+      }
+    } catch (error) {
+      response.send('missing or invalid api token')
+    }
+  }
+
+  async preStore(request, response) {
     const user = request.only(['email', 'status'])
     const rule = {
       email: 'required|email'
