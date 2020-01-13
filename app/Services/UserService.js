@@ -2,18 +2,20 @@
 
 const Event = use('Event')
 const User = use('App/Models/User')
+const Token = use('App/Models/Token')
+const Hash = use('Hash')
 
 class UserService {
 
   async store(user, response, auth) {
     const data = await User.create(user)
-    if(user.account_type == 'team') {
+    if (user.account_type == 'team') {
       const token = await auth.generate(data)
       return token
     }
     return data ? this.created(data, response) : this.error(response)
   }
-  
+
   /**
    *  Send Notifications(Mail, Slack) when created
    * @param {*} data 
@@ -56,7 +58,7 @@ class UserService {
   }
 
   async search(query, response) {
-    let data = await User.query().where('full_name', 'LIKE', '%'+query+'%').fetch()
+    let data = await User.query().where('full_name', 'LIKE', '%' + query + '%').fetch()
     if (!data) {
       return response.status(400).json({
         status: 'success',
@@ -70,6 +72,16 @@ class UserService {
       status: 'success',
       message: data,
     })
+  }
+
+  async showToken(user, response) {
+    try {
+      const pwd = await Hash.make(user.password)
+      const data = await User.query().where('email_address', user.email_address).fetch()//.where('password', pwd).fetch()
+      console.log(data.id)
+    } catch (error) {
+      console.log(error)
+    }
   }
 
 }

@@ -26,3 +26,10 @@ Route.group(() => {
   Route.get('/user/:query', 'UserController.find')
   Route.post('/subscribe', 'SubscribeController.store')
 }).prefix('/api/v1').middleware('auth')
+
+Route.group(() => {
+  Route.post('/generate', 'TokenGeneratorController.create')
+  // Route.post('/get', 'TokenGeneratorController.find')
+}).prefix('/api/v1/token')
+
+Route.get('/api/v1/stackoverflow', 'JobListingController.get')

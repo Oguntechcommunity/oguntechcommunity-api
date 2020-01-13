@@ -9,7 +9,7 @@ class UserSchema extends Schema {
       table.increments()
       table.enu('account_type', ['team', 'member'])
       table.string('full_name', 150).notNullable()
-      table.string('job_title', 200).notNullable()
+      table.string('job_title', 200).nullable()
       table.string('portfolio', 254).nullable()
       table.string('password', 150).nullable()
       table.string('phone_number', 20).nullable()

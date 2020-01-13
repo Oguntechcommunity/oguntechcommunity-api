@@ -50,6 +50,7 @@ const aceProviders = [
 const aliases = {
   'UserService' : 'App/Services/UserService',
   'SubscribeService': 'App/Services/SubscribeService',
+  'JobService': 'App/Services/JobListingService'
 }
 
 /*
