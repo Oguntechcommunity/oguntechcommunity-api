@@ -58,6 +58,22 @@ class UserController extends Service {
     }
     return this.store(user, response, auth)
   }
+
+  /**
+   * 
+   * @param {*} Object
+   */
+  async get({ response, auth }) {
+    try {
+      const check = await auth.check()
+      const data = await auth.getUser()
+      if (check && data) {
+        return this.getAll(response)
+      }
+    } catch (error) {
+      response.send('missing or invalid api token')
+    }
+  }
   /**
    * 
    * @param {*} Object

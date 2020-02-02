@@ -23,6 +23,7 @@ Route.get('/', () => {
 
 Route.group(() => {
   Route.post('/user', 'UserController.create')
+  Route.get('/user', 'UserController.get')
   Route.get('/user/:query', 'UserController.find')
   Route.post('/subscribe', 'SubscribeController.store')
 }).prefix('/api/v1').middleware('auth')

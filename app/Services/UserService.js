@@ -65,14 +65,28 @@ class UserService {
         message: 'No record found',
       })
     }
-    delete data['password']
-    delete data['account_type']
-    console.log(data)
+  
     return response.status(200).json({
       status: 'success',
       message: data,
     })
   }
+
+  async getAll(response) {
+    let data = await User.all();
+    if (!data) {
+      return response.status(400).json({
+        status: 'success',
+        message: 'No record found',
+      })
+    }
+  
+    return response.status(200).json({
+      status: 'success',
+      message: data,
+    })
+  }
+
 
   async showToken(user, response) {
     try {
